@@ -35,6 +35,12 @@ public class Sommet {
 		this.listArc = listArc;
 	}
 	
+	public boolean isActif() {
+		return actif;
+	}
+	public void setActif(boolean actif) {
+		this.actif = actif;
+	}
 	public String getId() {
 		return id;
 	}
