@@ -17,6 +17,20 @@ public class Graph {
 	public void setListArc(ArrayList<Sommet> listSommet) {
 		this.listSommet = listSommet;
 	}
-	
-	
+	public void creerGraph()
+	{
+		
+	}
+	public void lireGraph()
+	{
+		
+	}
+	public void plusCourtChemin(Arc debut, int gainVoulu)
+	{
+		
+	}
+	public void plusGrandGain(Arc debut, int distanceMax)
+	{
+		
+	}
 }
