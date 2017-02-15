@@ -8,6 +8,7 @@ public class Sommet {
 	String id;
 	String type;
 	int gain;
+	boolean actif;
 	ArrayList<Arc> listArc;
 	
 	public Sommet()
@@ -15,12 +16,14 @@ public class Sommet {
 		id = "";
 		type = "";
 		gain = 0;
+		actif = true;
 		listArc = null;
 	}
 	public Sommet(String id, String type, int gain) {
 		this.id = id;
 		this.type = type;
 		this.gain = gain;
+		actif = true;
 		listArc = null;
 	}
 
@@ -28,6 +31,7 @@ public class Sommet {
 		this.id = id;
 		this.type = type;
 		this.gain = gain;
+		actif = true;
 		this.listArc = listArc;
 	}
 	
