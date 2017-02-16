@@ -7,7 +7,7 @@ public class Arc {
 	
 	public Arc()
 	{
-		this.distance = 0;
+		this.distance = 0; // distance en mètre
 		this.destination = null;
 	}
 	public Arc(int distance, Sommet destination) {

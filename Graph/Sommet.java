@@ -8,7 +8,7 @@ public class Sommet {
 	String id;
 	String type;
 	int gain;
-	boolean actif;
+	int distanceActif;
 	ArrayList<Arc> listArc;
 	
 	public Sommet()
@@ -16,14 +16,14 @@ public class Sommet {
 		id = "";
 		type = "";
 		gain = 0;
-		actif = true;
+		distanceActif = 0;
 		listArc = null;
 	}
 	public Sommet(String id, String type, int gain) {
 		this.id = id;
 		this.type = type;
 		this.gain = gain;
-		actif = true;
+		distanceActif = 0;
 		listArc = null;
 	}
 
@@ -31,15 +31,15 @@ public class Sommet {
 		this.id = id;
 		this.type = type;
 		this.gain = gain;
-		actif = true;
+		distanceActif = 0;
 		this.listArc = listArc;
 	}
 	
-	public boolean isActif() {
-		return actif;
+	public int getDistanceActif() {
+		return distanceActif;
 	}
-	public void setActif(boolean actif) {
-		this.actif = actif;
+	public void setDistanceActif(int distanceActif) {
+		this.distanceActif = distanceActif;
 	}
 	public String getId() {
 		return id;
