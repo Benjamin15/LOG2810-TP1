@@ -10,11 +10,11 @@ public class Main {
 
 	private static void graphTest()
 	{
-		Sommet debut = new Sommet("0", "type", 0); 
-		Sommet sommet1 = new Sommet("1", "type", 20);		
-		Sommet sommet2 = new Sommet("2", "type", 30);
-		Sommet sommet3 = new Sommet("3", "type", 40);
-		Sommet sommet4 = new Sommet("4", "type", 50);
+		Sommet debut = new Sommet("0", "rien", 0); 
+		Sommet sommet1 = new Sommet("1", "pokemon", 10);		
+		Sommet sommet2 = new Sommet("2", "pokemon", 40);
+		Sommet sommet3 = new Sommet("3", "pokemon", 100);
+		Sommet sommet4 = new Sommet("4", "pokestop", 50);
 		
 		
 		// Arc du sommet 1
@@ -87,6 +87,6 @@ public class Main {
 		
 		// Creation du graph
 		Graph graph = new Graph(listSommet);
-		graph.plusCourtChemin(debut, 100);
+		graph.plusCourtChemin(debut, 500);
 	}
 }

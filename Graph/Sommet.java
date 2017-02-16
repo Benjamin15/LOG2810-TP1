@@ -9,6 +9,7 @@ public class Sommet {
 	private String type;
 	private int gain;
 	private int distanceActif;
+	private boolean active;
 	private ArrayList<Arc> listArc;
 	
 	public Sommet()
@@ -17,6 +18,7 @@ public class Sommet {
 		type = "";
 		gain = 0;
 		distanceActif = 0;
+		active = true;
 		listArc = null;
 	}
 	public Sommet(String id, String type, int gain) {
@@ -24,6 +26,7 @@ public class Sommet {
 		this.type = type;
 		this.gain = gain;
 		distanceActif = 0;
+		active = true;
 		listArc = null;
 	}
 
@@ -32,9 +35,16 @@ public class Sommet {
 		this.type = type;
 		this.gain = gain;
 		distanceActif = 0;
+		active = true;
 		this.listArc = listArc;
 	}
 	
+	public boolean isActive() {
+		return active;
+	}
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 	public int getDistanceActif() {
 		return distanceActif;
 	}
@@ -65,5 +75,26 @@ public class Sommet {
 	}
 	public void setListArc(ArrayList<Arc> listArc) {
 		this.listArc = listArc;
+	}
+	public void desactiver()
+	{
+		if (type.equals("pokemon") && gain == 100)
+			distanceActif = 500;
+		else if (type.equals("pokemon") && gain == 40)
+			distanceActif = 200;
+		else if (type.equals("pokemon") && gain == 10)
+			distanceActif = 100;
+		else if (type.equals("pokestop"))
+			distanceActif = 100;
+		active = false;
+	}
+	public void diminuerDistance(int distance)
+	{
+		if (!type.equals("arene"))
+		{
+			distanceActif -= distance;
+			distanceActif = (distanceActif < 0) ? 0 : distanceActif;
+			active = (distanceActif == 0) ? true : false;
+		}
 	}
 }

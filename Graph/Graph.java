@@ -55,11 +55,12 @@ public class Graph {
 		Sommet sommetCourant = debut;
 		Arc tempArc = null;
 		int distanceParcouru = 0;
+		ArrayList<Sommet> cheminChoisi = new ArrayList<Sommet>();
 		while (gainObtenu < gainVoulu)
 		{
 			for (Arc arc: sommetCourant.getListArc())
 			{
-				if (taux <  arc.getDestination().getGain() / arc.getDistance())
+				if (taux <  arc.getDestination().getGain() / arc.getDistance() && arc.getDestination().isActive())
 				{
 					temp = arc.getDestination();
 					tempArc = arc;
@@ -70,11 +71,20 @@ public class Graph {
 			taux = 0;
 			gainObtenu += sommetCourant.getGain();
 			distanceParcouru += tempArc.getDistance();
+			majDistance(cheminChoisi, tempArc.getDistance());
+			cheminChoisi.add(sommetCourant);
+			sommetCourant.desactiver();
 			System.out.println("gainActuel :"+ gainObtenu);
 			System.out.println("distance Parcouru :"+ distanceParcouru);
 		}
 	}
-	
+	public void majDistance(ArrayList<Sommet> cheminChoisi, int distance)
+	{
+		for (Sommet sommet : cheminChoisi)
+		{
+			sommet.diminuerDistance(distance);
+		}
+	}
 	/**
 	 * Permet de voir le plus grand gain à une distance max en partant d'un arc. Doit afficher les valeurs en sorties.
 	 * 
