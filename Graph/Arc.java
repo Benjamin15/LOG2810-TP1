@@ -2,8 +2,8 @@ package Graph;
 
 public class Arc {
 	
-	int distance;
-	Sommet destination;
+	private int distance;
+	private Sommet destination;
 	
 	public Arc()
 	{

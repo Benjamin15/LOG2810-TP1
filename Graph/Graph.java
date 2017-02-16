@@ -4,12 +4,18 @@ import java.util.ArrayList;
 
 public class Graph {
 
-	ArrayList<Sommet> listSommet;
+	private ArrayList<Sommet> listSommet;
 
+	public Graph() {
+		listSommet = null;
+	}
+	
 	public Graph(ArrayList<Sommet> listSommet) {
 		this.listSommet = listSommet;
 	}
 
+	
+	
 	public ArrayList<Sommet> getListSommet() {
 		return listSommet;
 	}
@@ -41,9 +47,32 @@ public class Graph {
 	 * @param debut
 	 * @param gainVoulu
 	 */
-	public void plusCourtChemin(Arc debut, int gainVoulu)
+	public void plusCourtChemin(Sommet debut, int gainVoulu)
 	{
-		
+		double taux = 0;
+		int gainObtenu = 0;
+		Sommet temp = null;
+		Sommet sommetCourant = debut;
+		Arc tempArc = null;
+		int distanceParcouru = 0;
+		while (gainObtenu < gainVoulu)
+		{
+			for (Arc arc: sommetCourant.getListArc())
+			{
+				if (taux <  arc.getDestination().getGain() / arc.getDistance())
+				{
+					temp = arc.getDestination();
+					tempArc = arc;
+					taux = temp.getGain() / arc.getDistance();
+				}
+			}
+			sommetCourant = temp;
+			taux = 0;
+			gainObtenu += sommetCourant.getGain();
+			distanceParcouru += tempArc.getDistance();
+			System.out.println("gainActuel :"+ gainObtenu);
+			System.out.println("distance Parcouru :"+ distanceParcouru);
+		}
 	}
 	
 	/**
@@ -52,7 +81,7 @@ public class Graph {
 	 * @param debut
 	 * @param distanceMax
 	 */
-	public void plusGrandGain(Arc debut, int distanceMax)
+	public void plusGrandGain(Sommet debut, int distanceMax)
 	{
 		
 	}

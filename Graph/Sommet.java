@@ -5,11 +5,11 @@ import java.util.ArrayList;
 public class Sommet {
 	
 
-	String id;
-	String type;
-	int gain;
-	int distanceActif;
-	ArrayList<Arc> listArc;
+	private String id;
+	private String type;
+	private int gain;
+	private int distanceActif;
+	private ArrayList<Arc> listArc;
 	
 	public Sommet()
 	{
