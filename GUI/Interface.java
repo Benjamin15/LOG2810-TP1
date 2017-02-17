@@ -28,7 +28,7 @@ public class Interface extends JFrame implements WindowListener {
 		Test test = new Test();
 		graph = test.creerGraph();
 		menu = new Menu(graph, test);
-		dessin = new DessinGraph();
+		dessin = new DessinGraph(graph);
 		this.add(menu);
 		this.add(dessin);
 		this.setVisible(true);
