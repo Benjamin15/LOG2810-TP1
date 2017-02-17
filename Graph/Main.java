@@ -1,7 +1,7 @@
 package Graph;
 
 
-import GUI.Menu;
+import GUI.Interface;
 
 public class Main {
 
@@ -14,7 +14,7 @@ public class Main {
 
 	public static void creerMenu()
 	{
-		Menu menu = new Menu();
+		Interface menu = new Interface();
 		menu.lancer();
 	}
 }

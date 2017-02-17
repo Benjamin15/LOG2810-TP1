@@ -1,48 +1,35 @@
 package GUI;
 
-import java.applet.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import Graph.Graph;
 import Graph.Test;
 
 @SuppressWarnings("serial")
-public class Menu extends Applet implements WindowListener {
+public class Menu extends JPanel{
 
-	private Button majCarte;
-	private Button cheminPlusCourt;
-	private Button cheminGrandGain;
-	private Button quitter;
-	private TextField inputText;
+	private JButton majCarte;
+	private JButton cheminPlusCourt;
+	private JButton cheminGrandGain;
+	private JButton quitter;
 	private Graph graph;
-	private Menu applet;
-	
-
-   
-	public  void lancer()
+	public Menu(Graph graph, Test test)
 	{
-		
-		 applet = new Menu();
-		initBouton();
-		initTextField();
-		Frame fenetre = new Frame("Graph Pokemon GO");
-		fenetre.addWindowListener(applet);
-		fenetre.add(applet, null);
-		fenetre.setSize(1000, 1000);
-		fenetre.setVisible(true);
-		applet.init();
-		applet.start();
+		this.graph = graph;
+		setLayout(new FlowLayout());
+	    this.setSize(500, 100);
+	              
+	    initBouton(test);
 	}
-
-   
-	private void initBouton()
+	private void initBouton(Test test)
 	{
-		Test test = new Test();
-		graph = test.creerGraph();
-		
-		majCarte = new Button("Mise à jour de la carte");
-		majCarte.setLocation(1000, 1000);
+		majCarte = new JButton("Mise à jour de la carte");
+		majCarte.setLocation(0, 0);
 		majCarte.addActionListener(new ActionListener()
 		{
 
@@ -53,30 +40,36 @@ public class Menu extends Applet implements WindowListener {
 			}
 			
 		});
-		applet.add(majCarte);
-		cheminPlusCourt = new Button("Trouver le chemin le plus court");
+		add(majCarte);
+		cheminPlusCourt = new JButton("Trouver le chemin le plus court");
 		cheminPlusCourt.addActionListener(new ActionListener()
 		{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				graph.plusCourtChemin(graph.getListSommet().get(0), Integer.parseInt(inputText.getText()));
+				String gain = JOptionPane.showInputDialog("Veuillez écrire le gain que vous souhaitez atteindre");
+				gain = (gain == null) ? "" : gain;
+				if (gain.matches("[0-9]*") && !gain.equals(""))
+					graph.plusCourtChemin(graph.getListSommet().get(0), Integer.parseInt(gain));
 			}
 			
 		});
-		applet.add(cheminPlusCourt);
-		cheminGrandGain = new Button("Mise à jour de la carte");
+		add(cheminPlusCourt);
+		cheminGrandGain = new JButton("Chemin ayant le plus grand gain");
 		cheminGrandGain.addActionListener(new ActionListener()
 		{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				test.plusGrandGain(graph.getListSommet().get(0), Integer.parseInt(inputText.getText()));
+				String distance = JOptionPane.showInputDialog("Veuillez écrire la distance que vous souhaitez atteindre (en metre)");
+				distance = (distance == null) ? "" : distance;
+				if (distance.matches("[0-9]*") && !distance.equals(""))
+					test.plusGrandGain(graph.getListSommet().get(0), Integer.parseInt(distance));
 			}
 			
 		});
-		applet.add(cheminGrandGain);
-		quitter = new Button("Quitter");
+		add(cheminGrandGain);
+		quitter = new JButton("Quitter");
 		quitter.addActionListener(new ActionListener()
 		{
 
@@ -86,29 +79,6 @@ public class Menu extends Applet implements WindowListener {
 			}
 			
 		});
-		applet.add(quitter);
-		
-		
-		
+		add(quitter);
 	}
-   
-	public void initTextField()
-	{
-		inputText = new TextField();
-		inputText.setText("0");
-		applet.add(inputText);
-	}
-	
-	
-	
-	public void windowClosing(WindowEvent e) {
-		System.exit(0);	// Ferme l'application si on clique sur la croix en haut à droite
-	}
-	public void windowActivated(WindowEvent e) { }
-	public void windowClosed(WindowEvent e) { }
-	public void windowDeactivated(WindowEvent e) { }
-	public void windowDeiconified(WindowEvent e) { }
-	public void windowIconified(WindowEvent e) { }
-	public void windowOpened(WindowEvent e) { }
-
 }
