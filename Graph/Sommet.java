@@ -76,6 +76,10 @@ public class Sommet {
 	public void setListArc(ArrayList<Arc> listArc) {
 		this.listArc = listArc;
 	}
+	
+	/**
+	 * permet de desactiver un sommet
+	 */
 	public void desactiver()
 	{
 		if (type.equals("pokemon") && gain == 100)
@@ -88,6 +92,11 @@ public class Sommet {
 			distanceActif = 100;
 		active = false;
 	}
+	
+	/**
+	 * permet de diminuer la distance necessaire à la réactivation d'un sommet. Les arenes ne peuvent pas être reactivé.
+	 * @param distance
+	 */
 	public void diminuerDistance(int distance)
 	{
 		if (!type.equals("arene"))
@@ -96,5 +105,17 @@ public class Sommet {
 			distanceActif = (distanceActif < 0) ? 0 : distanceActif;
 			active = (distanceActif == 0) ? true : false;
 		}
+	}
+	
+	public String ToString()
+	{
+		String resultat = "("+id+", "+type+ ", "+gain+", (";
+		for (Arc arc : listArc)
+		{
+			resultat += "("+ arc.getDestination().getId() + ", " + arc.getDistance() + "), ";
+		}
+		resultat = resultat.substring(0, resultat.length() - 2);
+		resultat += ")";
+		return resultat;
 	}
 }

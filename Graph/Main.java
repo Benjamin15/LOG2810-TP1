@@ -87,6 +87,7 @@ public class Main {
 		
 		// Creation du graph
 		Graph graph = new Graph(listSommet);
-		graph.plusCourtChemin(debut, 500);
+		//graph.plusCourtChemin(debut, 500);
+		graph.lireGraph();
 	}
 }

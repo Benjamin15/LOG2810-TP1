@@ -38,7 +38,10 @@ public class Graph {
 	
 	public void lireGraph()
 	{
-		
+		for (Sommet sommet : listSommet)
+		{
+			System.out.println(sommet.ToString());
+		}
 	}
 	
 	/**
@@ -78,6 +81,12 @@ public class Graph {
 			System.out.println("distance Parcouru :"+ distanceParcouru);
 		}
 	}
+	
+	/**
+	 * Permet de mettre à jour la distance avant de réactive les sommets que nous avons déjà traversé.
+	 * @param cheminChoisi
+	 * @param distance
+	 */
 	public void majDistance(ArrayList<Sommet> cheminChoisi, int distance)
 	{
 		for (Sommet sommet : cheminChoisi)
