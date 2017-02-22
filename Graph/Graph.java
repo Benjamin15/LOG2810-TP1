@@ -9,13 +9,13 @@ public class Graph {
 	public Graph() {
 		listSommet = null;
 	}
-	
+
 	public Graph(ArrayList<Sommet> listSommet) {
 		this.listSommet = listSommet;
 	}
 
-	
-	
+
+
 	public ArrayList<Sommet> getListSommet() {
 		return listSommet;
 	}
@@ -23,19 +23,19 @@ public class Graph {
 	public void setListArc(ArrayList<Sommet> listSommet) {
 		this.listSommet = listSommet;
 	}
-	
+
 	/**
 	 * Permet de remplir les objets afin de remplir le graph. Rempli l'arrayList avec tous les arcs.
 	 */
 	public void creerGraph()
 	{
-		
+
 	}
-	
+
 	/**
-	 * permet de lire les graph a l'écran
+	 * permet de lire les graph a l'ï¿½cran
 	 */
-	
+
 	public void lireGraph()
 	{
 		for (Sommet sommet : listSommet)
@@ -43,10 +43,10 @@ public class Graph {
 			System.out.println(sommet.ToString());
 		}
 	}
-	
+
 	/**
-	 * Permet de voir le plus court chemin. Affiche des données en sortie
-	 * 
+	 * Permet de voir le plus court chemin. Affiche des donnï¿½es en sortie
+	 *
 	 * @param debut
 	 * @param gainVoulu
 	 */
@@ -81,9 +81,9 @@ public class Graph {
 			System.out.println("distance Parcouru :"+ distanceParcouru);
 		}
 	}
-	
+
 	/**
-	 * Permet de mettre à jour la distance avant de réactive les sommets que nous avons déjà traversé.
+	 * Permet de mettre ï¿½ jour la distance avant de rï¿½active les sommets que nous avons dï¿½jï¿½ traversï¿½.
 	 * @param cheminChoisi
 	 * @param distance
 	 */
@@ -95,13 +95,43 @@ public class Graph {
 		}
 	}
 	/**
-	 * Permet de voir le plus grand gain à une distance max en partant d'un arc. Doit afficher les valeurs en sorties.
-	 * 
+	 * Permet de voir le plus grand gain ï¿½ une distance max en partant d'un arc. Doit afficher les valeurs en sorties.
+	 *
 	 * @param debut
 	 * @param distanceMax
 	 */
 	public void plusGrandGain(Sommet debut, int distanceMax)
 	{
-		
+		int distanceParcouru = 0;				//J'utilise les memes noms de varialbes que toi Benjamin et le meme type d'algorithme en fait :D
+		Sommet sommetCourant = debut;
+		int gainObtenu = 0;
+		ArrayList<Sommet> cheminChoisi = new ArrayList<Sommet>();
+		double tauxMax = 0;
+		Sommet sommetTemp = null;
+		Arc arcTemp = null;
+
+		while(distanceParcouru < distanceMax){
+			for(Arc arc: sommetCourant.getListArc()){		//On cherche le meilleur voisin
+				if(tauxMax < arc.getDestination().getGain() / arc.getDistance() && arc.getDestination().isActive() && distanceParcouru + arc.getDestination().getDistance() < distanceMax){
+					sommetTemp = arc.getDestination();
+					arcTemp = arc;
+					tauxMax = sommetTemp.getGain() / arc.getDestination().getDistance();
+				}
+			}
+			sommetCourant = sommetTemp;
+			cheminChoisi.add(sommetCourant);
+			tauxMax = 0;
+			distanceParcouru += arcTemp.getDistance();
+			gainObtenu += sommetCourant.getGain();
+			majDistance(cheminChoisi, arcTemp.getDistance());
+			sommetCourant.desactiver();
+
+		}
+		System.out.println("Le meilleur moyen de rentabiliser " + distanceMax + "kms est de prendre ce chemin : ");
+		for (Sommet sommet : cheminChoisi) {
+			System.out.print(sommet);
+			System.out.print("; ");
+		}
+		System.out.println("Au cours de ce chemin  vous aurez obtenu un gain total de : " + gainObtenu);
 	}
 }
