@@ -1,6 +1,10 @@
 package Graph;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Graph {
 
@@ -26,10 +30,77 @@ public class Graph {
 
 	/**
 	 * Permet de remplir les objets afin de remplir le graph. Rempli l'arrayList avec tous les arcs.
+	 * @throws IOException 
 	 */
-	public void creerGraph()
+	public void creerGraph() throws IOException
 	{
+		String path = "";
+		ArrayList<Sommet> listSommet = new ArrayList<Sommet>();
+		List<String> lines = Files.readAllLines(Paths.get(path));
+        
+		// On complete la liste des sommets
+        for (String token : lines.get(0).split(";")) {
+        	
+        	String[] infos = token.split(",");
+        	Sommet sommet = new Sommet();
+        	sommet.setId(infos[0]);
+        	sommet.setType(infos[1]);
+        	sommet.setGain(Integer.parseInt(infos[2]));
+        		
+        	listSommet.add(sommet);
+        }
+  
+        ArrayList<Sommet> sommets = new ArrayList<Sommet>();
+        ArrayList<Sommet> destinations = new ArrayList<Sommet>();
+        ArrayList<Integer> distances = new ArrayList<Integer>();
+        
+        for (String token : lines.get(1).split(";")) { // {"Sommet, Destination, Distance"}
+        	
+        	String[] infos = token.split(","); // {"Sommet", "Destination", "Distance"}
+        	
+        	for(Sommet sommet : listSommet){
+        		if (sommet.getId().equals(infos[0]))
+        			sommets.add(sommet);
+        	}
+        	
+        	
+        	for(Sommet sommet : listSommet){
+        		if (sommet.getId().equals(infos[1]))
+        			destinations.add(sommet);
+        	}
+        	
+        	distances.add(Integer.parseInt(infos[2]));
+        	
+        }
+        
+        
+        Integer index = 0; 
 
+        for (Sommet sommet : listSommet){
+        	
+        	ArrayList<Arc> listArc = new ArrayList<Arc>();
+        	
+        	if(index == 119){ // Si le sommet est a1 (Cas particulier index out of range)
+	            listArc.add(new Arc(distances.get(119), destinations.get(119)));
+	            listSommet.get(14).setListArc(listArc);
+	            index++;
+        	}
+        	
+        	if (index < 119) {
+	        	while (sommet.equals(sommets.get(index))) {
+	        		
+		        	listArc.add(new Arc(distances.get(index), destinations.get(index)));
+		        	
+		        	index++; // MAX = 120
+		        	
+	        	}
+	        	
+	        	sommet.setListArc(listArc);
+	        	
+        	}
+        } 
+     // creer le graph a partir de la liste de sommet 
+        this.setListArc(listSommet);
 	}
 
 	/**
