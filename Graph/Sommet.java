@@ -110,10 +110,15 @@ public class Sommet {
 	public String ToString()
 	{
 		String resultat = "("+id+", "+type+ ", "+gain+", (";
-		for (Arc arc : listArc)
+		if (listArc != null)
 		{
-			resultat += "("+ arc.getDestination().getId() + ", " + arc.getDistance() + "), ";
+			for (Arc arc : listArc)
+			{
+				resultat += "("+ arc.getDestination().getId() + ", " + arc.getDistance() + "), ";
+			}
 		}
+		else
+			resultat = resultat.substring(0, resultat.length() - 2);
 		resultat = resultat.substring(0, resultat.length() - 2);
 		resultat += ")";
 		return resultat;

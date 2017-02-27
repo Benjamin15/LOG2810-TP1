@@ -3,6 +3,8 @@ package GUI;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -18,15 +20,15 @@ public class Menu extends JPanel{
 	private JButton cheminGrandGain;
 	private JButton quitter;
 	private Graph graph;
-	public Menu(Graph graph, Test test)
+	public Menu(Graph graph)
 	{
 		this.graph = graph;
 		setLayout(new FlowLayout());
 	    this.setSize(500, 100);
 	              
-	    initBouton(test);
+	    initBouton(graph);
 	}
-	private void initBouton(Test test)
+	private void initBouton(Graph graph)
 	{
 		majCarte = new JButton("Mise à jour de la carte");
 		majCarte.setLocation(0, 0);
@@ -35,7 +37,12 @@ public class Menu extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				graph = test.creerGraph();
+				try {
+					graph.creerGraph();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				graph.lireGraph();
 			}
 			
@@ -64,7 +71,7 @@ public class Menu extends JPanel{
 				String distance = JOptionPane.showInputDialog("Veuillez écrire la distance que vous souhaitez atteindre (en metre)");
 				distance = (distance == null) ? "" : distance;
 				if (distance.matches("[0-9]*") && !distance.equals(""))
-					test.plusGrandGain(graph.getListSommet().get(0), Integer.parseInt(distance));
+					graph.plusGrandGain(graph.getListSommet().get(0), Integer.parseInt(distance));
 			}
 			
 		});

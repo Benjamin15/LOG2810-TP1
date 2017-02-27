@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -13,12 +14,13 @@ import Graph.Sommet;
 public class DessinGraph extends JPanel{
 
 	private Graph graph;
-	
+	private ArrayList<SommetGUI> listSommetGUI;
 	
 	
 	  public DessinGraph(Graph graph) {
 		super();
 		this.graph = graph;
+		listSommetGUI = new ArrayList<SommetGUI>();
 	}
 
 
@@ -28,16 +30,25 @@ public class DessinGraph extends JPanel{
 	}   
 	private void dessinSommet(Graphics g)
 	{
-		Sommet debut = graph.getListSommet().get(0);
-	    int x = 0;
-	    int y = this.getHeight()/3;
-	    SommetGUI dessinSommet = new SommetGUI(x,y, debut);
-	    dessinSommet.dessiner(g);
-		for (Arc arc : debut.getListArc())
+		calculerSommet();
+
+		for (SommetGUI sommet : listSommetGUI)
 		{
-			x += arc.getDistance()*4 + 100;
-		    SommetGUI dessinSommets = new SommetGUI(x,y, arc.getDestination());
-		    dessinSommets.dessiner(g);
+			sommet.dessiner(g);
 		}
+	}	
+	
+	private void calculerSommet()
+	{		
+		int x1 = getHeight()/8;
+		int y1 = getWidth()/5*2;
+		int x2 = x1 + 100 + graph.getListSommet().get(0).getListArc().get(0).getDistance() * 5;
+		int y2 = y1;
+		listSommetGUI.add(new SommetGUI(x1, y1, graph.getListSommet().get(0)));
+		listSommetGUI.add(new SommetGUI(x2, y2, graph.getListSommet().get(3)));
+		/*for(Arc arc : graph.getListSommet().get(0).getListArc())
+		{
+			
+		}*/
 	}
 }

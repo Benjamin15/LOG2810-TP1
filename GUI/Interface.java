@@ -2,6 +2,7 @@ package GUI;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 
@@ -23,11 +24,11 @@ public class Interface extends JFrame implements WindowListener {
 		this.setSize(1000, 1000);
 	}
    
-	public  void lancer()
+	public  void lancer() throws IOException
 	{
-		Test test = new Test();
-		graph = test.creerGraph();
-		menu = new Menu(graph, test);
+		graph = new Graph();
+		graph.creerGraph();
+		menu = new Menu(graph);
 		dessin = new DessinGraph(graph);
 		this.add(menu);
 		this.add(dessin);

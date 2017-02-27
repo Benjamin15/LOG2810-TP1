@@ -34,7 +34,7 @@ public class Graph {
 	 */
 	public void creerGraph() throws IOException
 	{
-		String path = "";
+		String path = "data_pokemon.txt";
 		ArrayList<Sommet> listSommet = new ArrayList<Sommet>();
 		List<String> lines = Files.readAllLines(Paths.get(path));
         
@@ -132,13 +132,16 @@ public class Graph {
 		ArrayList<Sommet> cheminChoisi = new ArrayList<Sommet>();
 		while (gainObtenu < gainVoulu)
 		{
-			for (Arc arc: sommetCourant.getListArc())
+			if (sommetCourant.getListArc() != null)
 			{
-				if (taux <  arc.getDestination().getGain() / arc.getDistance() && arc.getDestination().isActive())
+				for (Arc arc: sommetCourant.getListArc())
 				{
-					temp = arc.getDestination();
-					tempArc = arc;
-					taux = temp.getGain() / arc.getDistance();
+					if (taux <  arc.getDestination().getGain() / arc.getDistance() && arc.getDestination().isActive())
+					{
+						temp = arc.getDestination();
+						tempArc = arc;
+						taux = temp.getGain() / arc.getDistance();
+					}
 				}
 			}
 			sommetCourant = temp;
@@ -182,11 +185,16 @@ public class Graph {
 		Arc arcTemp = null;
 
 		while(distanceParcouru < distanceMax){
-			for(Arc arc: sommetCourant.getListArc()){		//On cherche le meilleur voisin
-				if(tauxMax < arc.getDestination().getGain() / arc.getDistance() && arc.getDestination().isActive() && distanceParcouru + arc.getDestination().getDistance() < distanceMax){
+			if (sommetCourant.getListArc() != null)
+			{
+				for(Arc arc: sommetCourant.getListArc()){		//On cherche le meilleur voisin
+					//if(tauxMax < arc.getDestination().getGain() / arc.getDistance() && arc.getDestination().isActive() && distanceParcouru + arc.getDestination().getDistance() < distanceMax){
+					if(tauxMax < arc.getDestination().getGain() / arc.getDistance() && arc.getDestination().isActive() && distanceParcouru + arc.getDistance() < distanceMax){ // update by ben, je sais pas si c'est ce que tu voulais
 					sommetTemp = arc.getDestination();
-					arcTemp = arc;
-					tauxMax = sommetTemp.getGain() / arc.getDestination().getDistance();
+						arcTemp = arc;
+						//tauxMax = sommetTemp.getGain() / arc.getDestination().getDistance();
+						tauxMax = sommetTemp.getGain() / arc.getDistance(); // update by ben, je sais pas si c'est ce que tu voulais
+					}
 				}
 			}
 			sommetCourant = sommetTemp;
@@ -200,8 +208,11 @@ public class Graph {
 		}
 		System.out.println("Le meilleur moyen de rentabiliser " + distanceMax + "kms est de prendre ce chemin : ");
 		for (Sommet sommet : cheminChoisi) {
-			System.out.print(sommet);
-			System.out.print("; ");
+			if (sommet != null)
+			{
+				System.out.print(sommet.getId());
+				System.out.print("; ");
+			}
 		}
 		System.out.println("Au cours de ce chemin  vous aurez obtenu un gain total de : " + gainObtenu);
 	}

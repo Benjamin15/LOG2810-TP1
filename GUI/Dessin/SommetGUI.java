@@ -2,6 +2,7 @@ package GUI.Dessin;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -13,6 +14,7 @@ public class SommetGUI extends JPanel {
 	private int x;
 	private int y; 
 	private Sommet sommet;
+	
 	
 	public int getX() {
 		return x;
