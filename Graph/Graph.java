@@ -16,14 +16,12 @@ public class Graph {
 	private ArrayList<Sommet> listSommet;
 
 	public Graph() {
-		listSommet = null;
+		listSommet = new ArrayList<Sommet>();
 	}
 
 	public Graph(ArrayList<Sommet> listSommet) {
 		this.listSommet = listSommet;
 	}
-
-
 
 	public ArrayList<Sommet> getListSommet() {
 		return listSommet;
@@ -159,39 +157,73 @@ public class Graph {
 	public Pair<ArrayList<Sommet>, Integer> plusGrandGain(Sommet debut, int distanceMax)
 	{
 		Pair<ArrayList<Sommet>, Integer> pair = new Pair<ArrayList<Sommet>, Integer>();
-		int distanceParcouru = 0;				//J'utilise les memes noms de varialbes que toi Benjamin et le meme type d'algorithme en fait :D
+		int distanceParcouru = 0;			
 		Sommet sommetCourant = debut;
+		ArrayList<Pair<Sommet, Arc>> cheminOuvert = new ArrayList<Pair<Sommet,Arc>>();
 		int gainObtenu = 0;
 		ArrayList<Sommet> cheminChoisi = new ArrayList<Sommet>();
 		double tauxMax = 0;
 		Sommet sommetTemp = null;
 		Arc arcTemp = null;
-
-		while(distanceParcouru < distanceMax)
+		boolean fin = false;
+		while(distanceParcouru < distanceMax && !fin)
 		{
 			if (sommetCourant.getListArc() != null)
 			{
-				for(Arc arc: sommetCourant.getListArc()){		//On cherche le meilleur voisin
-					//if(tauxMax < arc.getDestination().getGain() / arc.getDistance() && arc.getDestination().isActive() && distanceParcouru + arc.getDestination().getDistance() < distanceMax){
-					if(tauxMax < arc.getDestination().getGain() / arc.getDistance() && arc.getDestination().isActive() && distanceParcouru + arc.getDistance() < distanceMax){ // update by ben, je sais pas si c'est ce que tu voulais
-					sommetTemp = arc.getDestination();
-						arcTemp = arc;
-						//tauxMax = sommetTemp.getGain() / arc.getDestination().getDistance();
-						tauxMax = sommetTemp.getGain() / arc.getDistance(); // update by ben, je sais pas si c'est ce que tu voulais
+				for(Arc arc: sommetCourant.getListArc()){	
+					if (arc.getDestination().isActive() && arc.getDistance() <= distanceMax)
+						cheminOuvert.add(new Pair<Sommet, Arc> (sommetCourant, arc));
+					if(tauxMax < arc.getDestination().getGain() / arc.getDistance() && arc.getDestination().isActive()
+						&& distanceParcouru + arc.getDistance() < distanceMax)
+						{
+							sommetTemp = arc.getDestination();
+							arcTemp = arc;
+							tauxMax = sommetTemp.getGain() / arc.getDistance();
+						}
+				}
+			}
+			if (sommetCourant != sommetTemp)
+			{
+				sommetCourant = sommetTemp;
+				cheminChoisi.add(sommetCourant);
+				tauxMax = 0;
+				distanceParcouru += arcTemp.getDistance();
+				gainObtenu += sommetCourant.getGain();
+				majDistance(cheminChoisi, arcTemp.getDistance());
+				sommetCourant.desactiver();
+			}
+			else
+			{
+				tauxMax = 0;
+				for (Pair<Sommet, Arc> chemin : cheminOuvert)
+				{
+					if (tauxMax < chemin.second.getDestination().getGain() / chemin.second.getDistance())
+					{
+						sommetTemp = chemin.second.getDestination();
+						arcTemp = chemin.second;
+						tauxMax = sommetTemp.getGain() / arcTemp.getDistance();
 					}
 				}
-
+				fin = true;
 			}
-			sommetCourant = sommetTemp;
-			cheminChoisi.add(sommetCourant);
-			tauxMax = 0;
-			distanceParcouru += arcTemp.getDistance();
-			gainObtenu += sommetCourant.getGain();
-			majDistance(cheminChoisi, arcTemp.getDistance());
-			sommetCourant.desactiver();
-
 		}
-		System.out.println("Le meilleur moyen de rentabiliser " + distanceMax + "kms est de prendre ce chemin : ");
+		System.out.println("distance parcouru : " + distanceParcouru);
+		affichageConsoleGrandGain(cheminChoisi, distanceMax, gainObtenu);
+		reactiver();
+		pair.first = cheminChoisi;
+		pair.second = gainObtenu;
+		return pair;
+	}
+	
+	/**
+	 * Methode permettant d'afficher le meilleur gain dans la console
+	 * @param cheminChoisi
+	 * @param distanceMax
+	 * @param gainObtenu
+	 */
+	private void affichageConsoleGrandGain(ArrayList<Sommet> cheminChoisi, int distanceMax, int gainObtenu)
+	{
+		System.out.println("Le meilleur moyen de rentabiliser " + distanceMax + " metre est de prendre ce chemin : ");
 		for (Sommet sommet : cheminChoisi) {
 			if (sommet != null)
 			{
@@ -200,12 +232,7 @@ public class Graph {
 			}
 		}
 		System.out.println("Au cours de ce chemin  vous aurez obtenu un gain total de : " + gainObtenu);
-		reactiver();
-		pair.first = cheminChoisi;
-		pair.second = distanceParcouru;
-		return pair;
 	}
-	
 	/**
 	 * Methode permettant d'obtenir l'Id de tous les sommets
 	 * @return

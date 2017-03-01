@@ -7,12 +7,15 @@ package Graph;
  */
 public class Arc {
 	
+	/**
+	 * distance en metre
+	 */
 	private int distance;
 	private Sommet destination;
 	
 	public Arc()
 	{
-		this.distance = 0; // distance en mètre
+		this.distance = 0; 
 		this.destination = null;
 	}
 	public Arc(int distance, Sommet destination) {

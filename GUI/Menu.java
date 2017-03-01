@@ -26,7 +26,6 @@ public class Menu extends JPanel{
 	private JButton vider;
 	private JLabel description;
 	private JLabel resultat;
-	@SuppressWarnings("unused")
 	private Graph graph;
 	
 	public Menu(Graph graph, JPanel panel, Trajet trajet)
@@ -48,13 +47,11 @@ public class Menu extends JPanel{
 	 */
 	private void initBouton(Graph graph, JPanel tableau, Trajet trajet)
 	{
-
 		initMajCarte(tableau, trajet);
 		initCheminPlusCourt(tableau, trajet);
 		initCheminGrandGain(tableau, trajet);
 		initQuitter();
 		initVider(trajet);
-		
 	}
 	
 	/**
@@ -65,10 +62,8 @@ public class Menu extends JPanel{
 	private void initMajCarte(JPanel tableau, Trajet trajet)
 	{
 		majCarte = new JButton("Mise à jour de la carte");
-		majCarte.setLocation(0, 0);
 		majCarte.addActionListener(new ActionListener()
 		{
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -83,7 +78,6 @@ public class Menu extends JPanel{
 				}
 				graph.lireGraph();
 			}
-			
 		});
 		add(majCarte);
 	}
@@ -101,7 +95,6 @@ public class Menu extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				
 				String gain = JOptionPane.showInputDialog("Veuillez écrire le gain que vous souhaitez atteindre");
 				gain = (gain == null) ? "" : gain;
 				if (gain.matches("[0-9]*") && !gain.equals(""))
@@ -113,10 +106,9 @@ public class Menu extends JPanel{
 					trajet.revalidate();
 					description.setText("     gain rechercher : " + gain);
 					resultat.setText("                             distance obtenu : " + pair.second );
-					trajet.setVisible(true);/*trajet.repaint();*/
+					trajet.setVisible(true);
 				}
 			}
-			
 		});
 		add(cheminPlusCourt);
 	}
@@ -150,7 +142,6 @@ public class Menu extends JPanel{
 					trajet.setVisible(true);
 				}
 			}
-			
 		});
 		add(cheminGrandGain);
 	}
@@ -163,12 +154,10 @@ public class Menu extends JPanel{
 		quitter = new JButton("Quitter");
 		quitter.addActionListener(new ActionListener()
 		{
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				System.exit(0);
-			}
-			
+			}		
 		});
 		add(quitter);
 	}
@@ -182,7 +171,6 @@ public class Menu extends JPanel{
 		vider = new JButton("vider");
 		vider.addActionListener(new ActionListener()
 		{
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				trajet.setSommets(new ArrayList<Sommet>());
@@ -190,7 +178,6 @@ public class Menu extends JPanel{
 				description.setText("");
 				resultat.setText("");
 			}
-			
 		});
 		add(vider);
 	}
