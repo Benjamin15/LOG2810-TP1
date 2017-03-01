@@ -5,12 +5,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import GUI.Dessin.Trajet;
 import Graph.Graph;
+import Graph.Sommet;
 
 @SuppressWarnings("serial")
 public class Menu extends JPanel{
@@ -63,10 +65,11 @@ public class Menu extends JPanel{
 				if (gain.matches("[0-9]*") && !gain.equals(""))
 				{
 					tableau.setVisible(false);
-					trajet.removeAll();
+					//trajet.setVisible(false);
 					trajet.setSommets(graph.plusCourtChemin(graph.getListSommet().get(0), Integer.parseInt(gain)));
-					trajet.update(trajet.getGraphics());
-					trajet.setVisible(true);
+					trajet.revalidate();
+					
+					trajet.setVisible(true);/*trajet.repaint();*/
 				}
 			}
 			
@@ -83,9 +86,10 @@ public class Menu extends JPanel{
 				if (distance.matches("[0-9]*") && !distance.equals(""))
 				{
 					tableau.setVisible(false);
-					trajet.removeAll();
+					trajet.setVisible(false);
 					trajet.setSommets(graph.plusGrandGain(graph.getListSommet().get(0), Integer.parseInt(distance)));
-					trajet.update(trajet.getGraphics());
+					trajet.revalidate();
+					trajet.repaint();
 					trajet.setVisible(true);
 				}
 			}
