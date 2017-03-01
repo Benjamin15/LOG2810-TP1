@@ -250,7 +250,7 @@ public class Graph {
 		for (int i = 1; i < listSommet.size(); i++)
 		{
 			int j = 0;
-			result[i][j++] = listSommet.get(i-1).getListArc().get(0).getDestination().getId();
+			result[i][j++] = listSommet.get(i-1).getListArc().get(i-1).getDestination().getId();
 			for (; j <= i ; j++)
 			{
 				result[i][j] = " ";
@@ -259,8 +259,8 @@ public class Graph {
 			result[i][j++] = 0;
 			if (j < listSommet.get(0).getListArc().size() + 1)
 			{
-				for (; j <= listSommet.get(i).getListArc().size() + i + 1; j++)
-					result[i][j + i - nbCaseNull] = listSommet.get(i).getListArc().get(j - i - 2).getDistance();
+				for (; j < listSommet.get(i-1).getListArc().size() + 2; j++)
+					result[i][j + i - nbCaseNull] = listSommet.get(i).getListArc().get(j - 2).getDistance();
 			}
 			nbCaseNull = 0;
 		}

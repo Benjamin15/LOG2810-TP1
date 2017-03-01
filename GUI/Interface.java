@@ -20,9 +20,9 @@ public class Interface extends JFrame implements WindowListener {
 	
 	public Interface() throws HeadlessException {
 		super();
-		this.setTitle("Pokemon GO");
-		this.setSize(1600,800);
-		this.setUndecorated(true);
+		setTitle("Pokemon GO");
+		setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		//setUndecorated(true);
 	}
    
 	public  void lancer() throws IOException
