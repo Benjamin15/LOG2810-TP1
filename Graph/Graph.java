@@ -37,7 +37,7 @@ public class Graph {
 		String path = "data_pokemon.txt";
 		ArrayList<Sommet> listSommet = new ArrayList<Sommet>();
 		List<String> lines = Files.readAllLines(Paths.get(path));
-        
+        boolean fin= false;
 		// On complete la liste des sommets
         for (String token : lines.get(0).split(";")) {
         	
@@ -80,24 +80,28 @@ public class Graph {
         	
         	ArrayList<Arc> listArc = new ArrayList<Arc>();
         	
-        	if(index == lines.get(1).split(";").length - 1){ // Si le sommet est a1 (Cas particulier index out of range)
-	            listArc.add(new Arc(distances.get(119), destinations.get(119)));
+        	/*if(index == lines.get(1).split(";").length - 1){ // Si le sommet est a1 (Cas particulier index out of range)
+	            listArc.add(new Arc(distances.get(lines.get(1).split(";").length - 1), destinations.get(lines.get(1).split(";").length - 1)));
 	            listSommet.get(14).setListArc(listArc);
 	            index++;
-        	}
+        	}*/
         	
-        	if (index < lines.get(1).split(";").length - 1) {
-	        	while (sommet.equals(sommets.get(index))) {
+        	//if (index < lines.get(1).split(";").length - 1) {
+	        	while (sommet.equals(sommets.get(index)) && !fin) {
 	        		
-		        	listArc.add(new Arc(distances.get(index), destinations.get(index)));
-		        	
-		        	index++; // MAX = 120
+		        	//listArc.add(new Arc(distances.get(index), destinations.get(index)));
+		        	sommet.getListArc().add(new Arc (distances.get(index), destinations.get(index)));
+		        	destinations.get(index).getListArc().add(new Arc(distances.get(index), sommet));
+		        	if (index + 1 < lines.get(1).split(";").length)
+		        		index++; // MAX = 120
+		        	else 
+		        		fin = true;
 		        	
 	        	}
 	        	
-	        	sommet.setListArc(listArc);
+	        	//sommet.setListArc(listArc);
 	        	
-        	}
+        	//}
         } 
      // creer le graph a partir de la liste de sommet 
         this.setListSommet(listSommet);

@@ -19,7 +19,7 @@ public class Sommet {
 		gain = 0;
 		distanceActif = 0;
 		active = true;
-		listArc = null;
+		listArc = new ArrayList<Arc>();
 	}
 	public Sommet(String id, String type, int gain) {
 		this.id = id;
@@ -27,7 +27,7 @@ public class Sommet {
 		this.gain = gain;
 		distanceActif = 0;
 		active = true;
-		listArc = null;
+		listArc = new ArrayList<Arc>();
 	}
 
 	public Sommet(String id, String type, int gain, ArrayList<Arc> listArc) {
