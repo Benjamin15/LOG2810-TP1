@@ -1,5 +1,10 @@
 package Graph;
 
+/**
+ * 
+ * Class arc Representant le lien entre deux noeuds.
+ *
+ */
 public class Arc {
 	
 	private int distance;

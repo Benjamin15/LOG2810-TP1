@@ -5,8 +5,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
 
+/**
+ * 
+ * Class Graph, qui represente toutes les données relative au graph. Il comporte des Sommets.
+ *
+ */
 public class Graph {
 
 	private ArrayList<Sommet> listSommet;
@@ -39,53 +43,40 @@ public class Graph {
 		ArrayList<Sommet> listSommet = new ArrayList<Sommet>();
 		List<String> lines = Files.readAllLines(Paths.get(path));
         boolean fin= false;
-		// On complete la liste des sommets
         for (String token : lines.get(0).split(";")) {
-        	
         	String[] infos = token.split(",");
         	Sommet sommet = new Sommet();
         	sommet.setId(infos[0]);
         	sommet.setType(infos[1]);
         	sommet.setGain(Integer.parseInt(infos[2]));
-        		
         	listSommet.add(sommet);
         }
-  
         ArrayList<Sommet> sommets = new ArrayList<Sommet>();
         ArrayList<Sommet> destinations = new ArrayList<Sommet>();
         ArrayList<Integer> distances = new ArrayList<Integer>();
-        
-        for (String token : lines.get(1).split(";")) { // {"Sommet, Destination, Distance"}
-        	
-        	String[] infos = token.split(","); // {"Sommet", "Destination", "Distance"}
-        	
+        for (String token : lines.get(1).split(";")) {
+        	String[] infos = token.split(",");
         	for(Sommet sommet : listSommet){
         		if (sommet.getId().equals(infos[0]))
         			sommets.add(sommet);
         	}
-        	
-        	
         	for(Sommet sommet : listSommet){
         		if (sommet.getId().equals(infos[1]))
         			destinations.add(sommet);
         	}
-        	
         	distances.add(Integer.parseInt(infos[2]));
-        	
         }
         Integer index = 0; 
         for (Sommet sommet : listSommet){
-        	ArrayList<Arc> listArc = new ArrayList<Arc>();
 	        	while (sommet.equals(sommets.get(index)) && !fin) {
 		        	sommet.getListArc().add(new Arc (distances.get(index), destinations.get(index)));
 		        	destinations.get(index).getListArc().add(new Arc(distances.get(index), sommet));
 		        	if (index + 1 < lines.get(1).split(";").length)
-		        		index++; // MAX = 120
+		        		index++;
 		        	else 
 		        		fin = true;
 	        	}
         } 
-     // creer le graph a partir de la liste de sommet 
         this.setListSommet(listSommet);
 	}
 
@@ -97,7 +88,7 @@ public class Graph {
 	{
 		for (Sommet sommet : listSommet)
 		{
-			System.out.println(sommet.ToString());
+			System.out.println(sommet.toString());
 		}
 	}
 
@@ -215,6 +206,10 @@ public class Graph {
 		return pair;
 	}
 	
+	/**
+	 * Methode permettant d'obtenir l'Id de tous les sommets
+	 * @return
+	 */
 	public String[] getIdSommet()
 	{
 		String[] result = new String[listSommet.size() + 1];
@@ -226,6 +221,10 @@ public class Graph {
 		return result;
 	}
 	
+	/**
+	 * Methode permettant de renvoyer les données du graph à l'interface graphique.
+	 * @return
+	 */
 	public Object[][] getDonnee()
 	{
 		Object[][] result = new Object[listSommet.size()][listSommet.get(0).getListArc().size() + 3];
@@ -255,6 +254,10 @@ public class Graph {
 		}
 		return result;
 	}
+	
+	/**
+	 * Methode permettant de réactiver tous les sommets.
+	 */
 	private void reactiver()
 	{
 		for (Sommet sommet : listSommet)

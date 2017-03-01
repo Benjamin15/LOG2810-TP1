@@ -34,6 +34,10 @@ public class DessinGraph extends JPanel{
 		scrollPane.setColumnHeaderView(tableau.getTableHeader());
 		add(scrollPane);
 	}
+	
+	/**
+	 * Methode permettant d'afficher le graph
+	 */
 	public void afficherGraph()
 	{
 		tableau = new JTable(donnee, entete);

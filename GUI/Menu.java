@@ -28,6 +28,7 @@ public class Menu extends JPanel{
 	private JLabel resultat;
 	@SuppressWarnings("unused")
 	private Graph graph;
+	
 	public Menu(Graph graph, JPanel panel, Trajet trajet)
 	{
 		this.graph = graph;
@@ -39,7 +40,29 @@ public class Menu extends JPanel{
 	    add(description);
 	    add(resultat);
 	}
+	/**
+	 * Methode permettant d'initialiser les boutons
+	 * @param graph
+	 * @param tableau
+	 * @param trajet
+	 */
 	private void initBouton(Graph graph, JPanel tableau, Trajet trajet)
+	{
+
+		initMajCarte(tableau, trajet);
+		initCheminPlusCourt(tableau, trajet);
+		initCheminGrandGain(tableau, trajet);
+		initQuitter();
+		initVider(trajet);
+		
+	}
+	
+	/**
+	 * Methode permettant d'initialiser le bouton de mise à jour de la carte
+	 * @param tableau
+	 * @param trajet
+	 */
+	private void initMajCarte(JPanel tableau, Trajet trajet)
 	{
 		majCarte = new JButton("Mise à jour de la carte");
 		majCarte.setLocation(0, 0);
@@ -63,6 +86,15 @@ public class Menu extends JPanel{
 			
 		});
 		add(majCarte);
+	}
+	
+	/**
+	 * Methode Permettant d'initialiser le bouton permettant de calculer le plus court chemin
+	 * @param tableau
+	 * @param trajet
+	 */
+	private void initCheminPlusCourt(JPanel tableau, Trajet trajet)
+	{
 		cheminPlusCourt = new JButton("Trouver le chemin le plus court");
 		cheminPlusCourt.addActionListener(new ActionListener()
 		{
@@ -87,6 +119,16 @@ public class Menu extends JPanel{
 			
 		});
 		add(cheminPlusCourt);
+	}
+	
+	
+	/**
+	 * Methode permettant d'initialiser le bouton qui permet de calculer le chemin ayant le plus grand gain.
+	 * @param tableau
+	 * @param trajet
+	 */
+	private void initCheminGrandGain(JPanel tableau, Trajet trajet)
+	{
 		cheminGrandGain = new JButton("Chemin ayant le plus grand gain");
 		cheminGrandGain.addActionListener(new ActionListener()
 		{
@@ -111,6 +153,13 @@ public class Menu extends JPanel{
 			
 		});
 		add(cheminGrandGain);
+	}
+	
+	/**
+	 * Methode permettant d'initialiser le bouton quitter
+	 */
+	private void initQuitter()
+	{
 		quitter = new JButton("Quitter");
 		quitter.addActionListener(new ActionListener()
 		{
@@ -122,6 +171,14 @@ public class Menu extends JPanel{
 			
 		});
 		add(quitter);
+	}
+	
+	/**
+	 * Methode permettant d'initialiser le bouton permettant de vider l'écran
+	 * @param trajet
+	 */
+	private void initVider(Trajet trajet)
+	{
 		vider = new JButton("vider");
 		vider.addActionListener(new ActionListener()
 		{

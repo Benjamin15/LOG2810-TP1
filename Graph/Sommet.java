@@ -39,6 +39,10 @@ public class Sommet {
 		this.listArc = listArc;
 	}
 	
+	/**
+	 * Methode permettant de savoir si le sommet est actif
+	 * @return
+	 */
 	public boolean isActive() {
 		return active;
 	}
@@ -107,12 +111,19 @@ public class Sommet {
 		}
 	}
 	
+	/**
+	 * Methode permettant d'activer un sommet.
+	 */
 	public void activer()
 	{
 		distanceActif = 0;
 		active = true;
 	}
-	public String ToString()
+	/**
+	 * Methode toString()
+	 * @return
+	 */
+	public String toString()
 	{
 		String resultat = "("+id+", "+type+ ", "+gain+", (";
 		if (listArc != null)

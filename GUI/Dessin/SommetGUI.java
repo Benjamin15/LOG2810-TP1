@@ -8,6 +8,11 @@ import javax.swing.JPanel;
 import Graph.Sommet;
 
 @SuppressWarnings("serial")
+/**
+ * 
+ * Class permettant d'afficher les sommets
+ *
+ */
 public class SommetGUI extends JPanel {
 
 	private int x;
@@ -49,6 +54,10 @@ public class SommetGUI extends JPanel {
 		this.setSize(100, 100);
 		this.setVisible(true);
 	}
+	/**
+	 * Methode permettant de dessiner les sommets
+	 * @param g
+	 */
 	public void dessiner(Graphics g)
 	{
 		if (sommet.getType().equals("pokemon"))
