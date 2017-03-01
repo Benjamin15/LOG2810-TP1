@@ -22,7 +22,6 @@ public class Interface extends JFrame implements WindowListener {
 		super();
 		setTitle("Pokemon GO");
 		setExtendedState(JFrame.MAXIMIZED_BOTH); 
-		//setUndecorated(true);
 	}
    
 	public  void lancer() throws IOException
@@ -36,7 +35,7 @@ public class Interface extends JFrame implements WindowListener {
 		
 		trajet.setVisible(false);
 		this.add(menu);
-		this.add(tableau,  BorderLayout.SOUTH);
+		this.add(tableau,  BorderLayout.NORTH);
 		this.add(trajet);
 		this.setVisible(true);
 	}

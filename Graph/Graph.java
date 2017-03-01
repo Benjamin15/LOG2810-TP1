@@ -229,17 +229,18 @@ public class Graph {
 	
 	public String[] getIdSommet()
 	{
-		String[] result = new String[listSommet.size()];
-		for (int i = 0; i < listSommet.size(); i++)
+		String[] result = new String[listSommet.size() + 1];
+		result[0] = " ";
+		for (int i = 1; i < listSommet.size() + 1; i++)
 		{
-			result[i] = listSommet.get(i).getId();
+			result[i] = listSommet.get(i - 1).getId();
 		}
 		return result;
 	}
 	
 	public Object[][] getDonnee()
 	{
-		Object[][] result = new Object[listSommet.size()][listSommet.get(0).getListArc().size() + 2];
+		Object[][] result = new Object[listSommet.size()][listSommet.get(0).getListArc().size() + 3];
 		result[0][0] = listSommet.get(0).getId();
 		result[0][1] = 0;
 		int nbCaseNull = 0;
@@ -257,7 +258,7 @@ public class Graph {
 				nbCaseNull++;
 			}
 			result[i][j++] = 0;
-			if (j < listSommet.get(0).getListArc().size() + 1)
+			if (j < listSommet.get(0).getListArc().size() + 2)
 			{
 				for (; j < listSommet.get(i-1).getListArc().size() + 2; j++)
 					result[i][j + i - nbCaseNull] = listSommet.get(i).getListArc().get(j - 2).getDistance();

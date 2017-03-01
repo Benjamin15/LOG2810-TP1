@@ -39,7 +39,7 @@ public class Trajet extends JPanel{
 		if (sommets != null)
 		{
 			int x = 0;
-			int y = 200;
+			int y = 300;
 			int i = 0;
 			boolean retour = false;
 			for (Sommet sommet : sommets)

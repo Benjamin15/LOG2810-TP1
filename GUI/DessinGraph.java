@@ -1,9 +1,11 @@
 package GUI;
 
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 @SuppressWarnings("serial")
@@ -25,10 +27,12 @@ public class DessinGraph extends JPanel{
 		super();
 		this.donnee = donnee;
 		this.entete = entete;
+		this.setPreferredSize(new Dimension(500,285));
 		tableau = new JTable(donnee, entete);
-		tableau.setLocation(0, 300);
 		setLayout(new FlowLayout(FlowLayout.CENTER));
-		add(tableau);
+		JScrollPane scrollPane = new JScrollPane(tableau);
+		scrollPane.setColumnHeaderView(tableau.getTableHeader());
+		add(scrollPane);
 	}
 	public void afficherGraph()
 	{

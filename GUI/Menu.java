@@ -4,7 +4,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -21,6 +21,7 @@ public class Menu extends JPanel{
 	private JButton cheminPlusCourt;
 	private JButton cheminGrandGain;
 	private JButton quitter;
+	private JButton vider;
 	@SuppressWarnings("unused")
 	private Graph graph;
 	public Menu(Graph graph, JPanel panel, Trajet trajet)
@@ -107,5 +108,17 @@ public class Menu extends JPanel{
 			
 		});
 		add(quitter);
+		vider = new JButton("vider");
+		vider.addActionListener(new ActionListener()
+		{
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				trajet.setSommets(new ArrayList<Sommet>());
+				trajet.setVisible(false);
+			}
+			
+		});
+		add(vider);
 	}
 }
