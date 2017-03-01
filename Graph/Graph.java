@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 
 public class Graph {
 
@@ -72,36 +73,17 @@ public class Graph {
         	distances.add(Integer.parseInt(infos[2]));
         	
         }
-        
-        
         Integer index = 0; 
-
         for (Sommet sommet : listSommet){
-        	
         	ArrayList<Arc> listArc = new ArrayList<Arc>();
-        	
-        	/*if(index == lines.get(1).split(";").length - 1){ // Si le sommet est a1 (Cas particulier index out of range)
-	            listArc.add(new Arc(distances.get(lines.get(1).split(";").length - 1), destinations.get(lines.get(1).split(";").length - 1)));
-	            listSommet.get(14).setListArc(listArc);
-	            index++;
-        	}*/
-        	
-        	//if (index < lines.get(1).split(";").length - 1) {
 	        	while (sommet.equals(sommets.get(index)) && !fin) {
-	        		
-		        	//listArc.add(new Arc(distances.get(index), destinations.get(index)));
 		        	sommet.getListArc().add(new Arc (distances.get(index), destinations.get(index)));
 		        	destinations.get(index).getListArc().add(new Arc(distances.get(index), sommet));
 		        	if (index + 1 < lines.get(1).split(";").length)
 		        		index++; // MAX = 120
 		        	else 
 		        		fin = true;
-		        	
 	        	}
-	        	
-	        	//sommet.setListArc(listArc);
-	        	
-        	//}
         } 
      // creer le graph a partir de la liste de sommet 
         this.setListSommet(listSommet);
@@ -125,8 +107,9 @@ public class Graph {
 	 * @param debut
 	 * @param gainVoulu
 	 */
-	public ArrayList<Sommet> plusCourtChemin(Sommet debut, int gainVoulu)
+	public Pair<ArrayList<Sommet>, Integer> plusCourtChemin(Sommet debut, int gainVoulu)
 	{
+		Pair<ArrayList<Sommet>, Integer> pair = new Pair<ArrayList<Sommet>, Integer>();
 		double taux = 0;
 		int gainObtenu = 0;
 		Sommet temp = null;
@@ -159,7 +142,9 @@ public class Graph {
 			System.out.println("distance Parcouru :"+ distanceParcouru);
 		}
 		reactiver();
-		return cheminChoisi;
+		pair.first = cheminChoisi;
+		pair.second = distanceParcouru;
+		return pair;
 	}
 
 	/**
@@ -180,8 +165,9 @@ public class Graph {
 	 * @param debut
 	 * @param distanceMax
 	 */
-	public ArrayList<Sommet> plusGrandGain(Sommet debut, int distanceMax)
+	public Pair<ArrayList<Sommet>, Integer> plusGrandGain(Sommet debut, int distanceMax)
 	{
+		Pair<ArrayList<Sommet>, Integer> pair = new Pair<ArrayList<Sommet>, Integer>();
 		int distanceParcouru = 0;				//J'utilise les memes noms de varialbes que toi Benjamin et le meme type d'algorithme en fait :D
 		Sommet sommetCourant = debut;
 		int gainObtenu = 0;
@@ -224,7 +210,9 @@ public class Graph {
 		}
 		System.out.println("Au cours de ce chemin  vous aurez obtenu un gain total de : " + gainObtenu);
 		reactiver();
-		return cheminChoisi;
+		pair.first = cheminChoisi;
+		pair.second = distanceParcouru;
+		return pair;
 	}
 	
 	public String[] getIdSommet()

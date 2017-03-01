@@ -12,7 +12,6 @@ import Graph.Sommet;
 public class Trajet extends JPanel{
 	ArrayList<Sommet> sommets;
 
-
 	public Trajet()
 	{
 		sommets = null;
