@@ -35,33 +35,41 @@ public class Trajet extends JPanel{
 	
 	public void dessiner(Graphics g)
 	{
-		int x = 0;
-		int y = 200;
-		int i = 0;
-		boolean retour = false;
-		for (Sommet sommet : sommets)
+		if (sommets != null)
 		{
-			SommetGUI sommetGui = new SommetGUI(x, y, sommet);
-			if ( (i + 1) % 7 != 0)
+			int x = 0;
+			int y = 200;
+			int i = 0;
+			boolean retour = false;
+			for (Sommet sommet : sommets)
 			{
-				if (i < sommets.size() - 1)
-				if (!retour)
-					flecheDroite(g, x, y);
-				else if (retour)
-					flecheGauche(g, x, y);
+				SommetGUI sommetGui = new SommetGUI(x, y, sommet);
+				if ( (i + 1) % 7 != 0)
+				{
+					if (i < sommets.size() - 1)
+					{
+						if (!retour)
+							flecheDroite(g, x, y);
+						else if (retour)
+							flecheGauche(g, x, y);
+					}
+				}
+				sommetGui.dessiner(g);
+				if (++i % 7 == 0)
+				{
+					y += 200;
+					x = (retour) ? -200 : x + 200;
+					if (i < sommets.size() - 1)
+					{
+						if (retour)
+							flecheBas(g, x+400, y);
+						else
+							flecheBas(g, x, y);
+					}
+					retour = (retour) ? false : true;
+				}
+				x = (!retour) ? x + 200 : x - 200;
 			}
-			sommetGui.dessiner(g);
-			if (++i % 7 == 0)
-			{
-				y += 200;
-				x = (retour) ? -200 : x + 200;
-				if (retour)
-					flecheBas(g, x+400, y);
-				else
-					flecheBas(g, x, y);
-				retour = (retour) ? false : true;
-			}
-			x = (!retour) ? x + 200 : x - 200;
 		}
 	}
 	public void flecheDroite(Graphics g, int x, int y)

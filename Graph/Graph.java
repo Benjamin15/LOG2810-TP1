@@ -121,7 +121,7 @@ public class Graph {
 	 * @param debut
 	 * @param gainVoulu
 	 */
-	public void plusCourtChemin(Sommet debut, int gainVoulu)
+	public ArrayList<Sommet> plusCourtChemin(Sommet debut, int gainVoulu)
 	{
 		double taux = 0;
 		int gainObtenu = 0;
@@ -155,6 +155,7 @@ public class Graph {
 			System.out.println("distance Parcouru :"+ distanceParcouru);
 		}
 		reactiver();
+		return cheminChoisi;
 	}
 
 	/**
@@ -175,7 +176,7 @@ public class Graph {
 	 * @param debut
 	 * @param distanceMax
 	 */
-	public void plusGrandGain(Sommet debut, int distanceMax)
+	public ArrayList<Sommet> plusGrandGain(Sommet debut, int distanceMax)
 	{
 		int distanceParcouru = 0;				//J'utilise les memes noms de varialbes que toi Benjamin et le meme type d'algorithme en fait :D
 		Sommet sommetCourant = debut;
@@ -219,6 +220,7 @@ public class Graph {
 		}
 		System.out.println("Au cours de ce chemin  vous aurez obtenu un gain total de : " + gainObtenu);
 		reactiver();
+		return cheminChoisi;
 	}
 	
 	public String[] getIdSommet()

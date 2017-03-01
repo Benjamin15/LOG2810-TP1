@@ -5,11 +5,9 @@ import java.awt.event.*;
 import java.io.IOException;
 
 import javax.swing.JFrame;
-import javax.swing.JScrollPane;
 
 import GUI.Dessin.Trajet;
 import Graph.Graph;
-import Graph.Test;
 
 @SuppressWarnings("serial")
 public class Interface extends JFrame implements WindowListener {
@@ -31,15 +29,15 @@ public class Interface extends JFrame implements WindowListener {
 	{
 		graph = new Graph();
 		graph.creerGraph();
-		
+		trajet = new Trajet();
 		tableau = new DessinGraph(graph.getDonnee(), graph.getIdSommet());
-		menu = new Menu(graph, tableau);
+		menu = new Menu(graph, tableau, trajet);
 		
-		trajet = new Trajet(graph.getListSommet());
-		trajet.setVisible(true);
+		
+		trajet.setVisible(false);
 		this.add(menu);
-		//this.add(tableau,  BorderLayout.SOUTH);
-		//this.add(trajet);
+		this.add(tableau,  BorderLayout.SOUTH);
+		this.add(trajet);
 		this.setVisible(true);
 	}
 

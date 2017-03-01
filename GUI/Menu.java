@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import GUI.Dessin.Trajet;
 import Graph.Graph;
 
 @SuppressWarnings("serial")
@@ -20,15 +21,15 @@ public class Menu extends JPanel{
 	private JButton quitter;
 	@SuppressWarnings("unused")
 	private Graph graph;
-	public Menu(Graph graph, JPanel panel)
+	public Menu(Graph graph, JPanel panel, Trajet trajet)
 	{
 		this.graph = graph;
 		setLayout(new FlowLayout());
 	    this.setSize(500, 100);
 	              
-	    initBouton(graph, panel);
+	    initBouton(graph, panel, trajet);
 	}
-	private void initBouton(Graph graph, JPanel panel)
+	private void initBouton(Graph graph, JPanel tableau, Trajet trajet)
 	{
 		majCarte = new JButton("Mise à jour de la carte");
 		majCarte.setLocation(0, 0);
@@ -39,7 +40,8 @@ public class Menu extends JPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					graph.creerGraph();
-					panel.setVisible(true);
+					tableau.setVisible(true);
+					trajet.setVisible(false);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -60,8 +62,11 @@ public class Menu extends JPanel{
 				gain = (gain == null) ? "" : gain;
 				if (gain.matches("[0-9]*") && !gain.equals(""))
 				{
-					panel.setVisible(false);
-					graph.plusCourtChemin(graph.getListSommet().get(0), Integer.parseInt(gain));
+					tableau.setVisible(false);
+					trajet.removeAll();
+					trajet.setSommets(graph.plusCourtChemin(graph.getListSommet().get(0), Integer.parseInt(gain)));
+					trajet.update(trajet.getGraphics());
+					trajet.setVisible(true);
 				}
 			}
 			
@@ -77,8 +82,11 @@ public class Menu extends JPanel{
 				distance = (distance == null) ? "" : distance;
 				if (distance.matches("[0-9]*") && !distance.equals(""))
 				{
-					panel.setVisible(false);
-					graph.plusGrandGain(graph.getListSommet().get(0), Integer.parseInt(distance));
+					tableau.setVisible(false);
+					trajet.removeAll();
+					trajet.setSommets(graph.plusGrandGain(graph.getListSommet().get(0), Integer.parseInt(distance)));
+					trajet.update(trajet.getGraphics());
+					trajet.setVisible(true);
 				}
 			}
 			
