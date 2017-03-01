@@ -37,6 +37,10 @@ public class SommetGUI extends JPanel {
 		this.sommet = sommet;
 	}
 	
+	public void paintComponent(Graphics g){
+		dessiner(g);
+	}   
+	
 	public SommetGUI(int x, int y, Sommet sommet)
 	{
 		this.x = x;

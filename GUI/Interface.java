@@ -5,7 +5,9 @@ import java.awt.event.*;
 import java.io.IOException;
 
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 
+import GUI.Dessin.Trajet;
 import Graph.Graph;
 import Graph.Test;
 
@@ -14,24 +16,30 @@ public class Interface extends JFrame implements WindowListener {
 
 
 	private Menu menu;
-	private DessinGraph dessin;
+	private DessinGraph tableau;
 	private Graph graph;
-
+	private Trajet trajet;
 	
 	public Interface() throws HeadlessException {
 		super();
 		this.setTitle("Pokemon GO");
-		this.setSize(1000, 1000);
+		this.setSize(1600,800);
+		this.setUndecorated(true);
 	}
    
 	public  void lancer() throws IOException
 	{
 		graph = new Graph();
 		graph.creerGraph();
-		menu = new Menu(graph);
-		dessin = new DessinGraph(graph);
+		
+		tableau = new DessinGraph(graph.getDonnee(), graph.getIdSommet());
+		menu = new Menu(graph, tableau);
+		
+		trajet = new Trajet(graph.getListSommet());
+		trajet.setVisible(true);
 		this.add(menu);
-		this.add(dessin);
+		//this.add(tableau,  BorderLayout.SOUTH);
+		//this.add(trajet);
 		this.setVisible(true);
 	}
 

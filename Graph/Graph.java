@@ -24,7 +24,7 @@ public class Graph {
 		return listSommet;
 	}
 
-	public void setListArc(ArrayList<Sommet> listSommet) {
+	public void setListSommet(ArrayList<Sommet> listSommet) {
 		this.listSommet = listSommet;
 	}
 
@@ -80,13 +80,13 @@ public class Graph {
         	
         	ArrayList<Arc> listArc = new ArrayList<Arc>();
         	
-        	if(index == 119){ // Si le sommet est a1 (Cas particulier index out of range)
+        	if(index == lines.get(1).split(";").length - 1){ // Si le sommet est a1 (Cas particulier index out of range)
 	            listArc.add(new Arc(distances.get(119), destinations.get(119)));
 	            listSommet.get(14).setListArc(listArc);
 	            index++;
         	}
         	
-        	if (index < 119) {
+        	if (index < lines.get(1).split(";").length - 1) {
 	        	while (sommet.equals(sommets.get(index))) {
 	        		
 		        	listArc.add(new Arc(distances.get(index), destinations.get(index)));
@@ -100,7 +100,7 @@ public class Graph {
         	}
         } 
      // creer le graph a partir de la liste de sommet 
-        this.setListArc(listSommet);
+        this.setListSommet(listSommet);
 	}
 
 	/**
@@ -154,6 +154,7 @@ public class Graph {
 			System.out.println("gainActuel :"+ gainObtenu);
 			System.out.println("distance Parcouru :"+ distanceParcouru);
 		}
+		reactiver();
 	}
 
 	/**
@@ -184,7 +185,8 @@ public class Graph {
 		Sommet sommetTemp = null;
 		Arc arcTemp = null;
 
-		while(distanceParcouru < distanceMax){
+		while(distanceParcouru < distanceMax)
+		{
 			if (sommetCourant.getListArc() != null)
 			{
 				for(Arc arc: sommetCourant.getListArc()){		//On cherche le meilleur voisin
@@ -196,6 +198,7 @@ public class Graph {
 						tauxMax = sommetTemp.getGain() / arc.getDistance(); // update by ben, je sais pas si c'est ce que tu voulais
 					}
 				}
+
 			}
 			sommetCourant = sommetTemp;
 			cheminChoisi.add(sommetCourant);
@@ -215,5 +218,53 @@ public class Graph {
 			}
 		}
 		System.out.println("Au cours de ce chemin  vous aurez obtenu un gain total de : " + gainObtenu);
+		reactiver();
+	}
+	
+	public String[] getIdSommet()
+	{
+		String[] result = new String[listSommet.size()];
+		for (int i = 0; i < listSommet.size(); i++)
+		{
+			result[i] = listSommet.get(i).getId();
+		}
+		return result;
+	}
+	
+	public Object[][] getDonnee()
+	{
+		Object[][] result = new Object[listSommet.size()][listSommet.get(0).getListArc().size() + 2];
+		result[0][0] = listSommet.get(0).getId();
+		result[0][1] = 0;
+		int nbCaseNull = 0;
+		for (int j = 0; j < listSommet.get(0).getListArc().size() ; j++)
+		{
+			result[0][j+2] = listSommet.get(0).getListArc().get(j).getDistance();
+		}
+		for (int i = 1; i < listSommet.size(); i++)
+		{
+			int j = 0;
+			result[i][j++] = listSommet.get(i-1).getListArc().get(0).getDestination().getId();
+			for (; j <= i ; j++)
+			{
+				result[i][j] = " ";
+				nbCaseNull++;
+			}
+			result[i][j++] = 0;
+			if (j < listSommet.get(0).getListArc().size() + 1)
+			{
+				for (; j <= listSommet.get(i).getListArc().size() + i + 1; j++)
+					result[i][j + i - nbCaseNull] = listSommet.get(i).getListArc().get(j - i - 2).getDistance();
+			}
+			nbCaseNull = 0;
+		}
+		return result;
+	}
+	private void reactiver()
+	{
+		for (Sommet sommet : listSommet)
+		{
+			sommet.activer();
+		}
 	}
 }

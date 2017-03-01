@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import Graph.Graph;
-import Graph.Test;
 
 @SuppressWarnings("serial")
 public class Menu extends JPanel{
@@ -19,16 +18,17 @@ public class Menu extends JPanel{
 	private JButton cheminPlusCourt;
 	private JButton cheminGrandGain;
 	private JButton quitter;
+	@SuppressWarnings("unused")
 	private Graph graph;
-	public Menu(Graph graph)
+	public Menu(Graph graph, JPanel panel)
 	{
 		this.graph = graph;
 		setLayout(new FlowLayout());
 	    this.setSize(500, 100);
 	              
-	    initBouton(graph);
+	    initBouton(graph, panel);
 	}
-	private void initBouton(Graph graph)
+	private void initBouton(Graph graph, JPanel panel)
 	{
 		majCarte = new JButton("Mise à jour de la carte");
 		majCarte.setLocation(0, 0);
@@ -39,6 +39,7 @@ public class Menu extends JPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					graph.creerGraph();
+					panel.setVisible(true);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -54,10 +55,14 @@ public class Menu extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				
 				String gain = JOptionPane.showInputDialog("Veuillez écrire le gain que vous souhaitez atteindre");
 				gain = (gain == null) ? "" : gain;
 				if (gain.matches("[0-9]*") && !gain.equals(""))
+				{
+					panel.setVisible(false);
 					graph.plusCourtChemin(graph.getListSommet().get(0), Integer.parseInt(gain));
+				}
 			}
 			
 		});
@@ -71,7 +76,10 @@ public class Menu extends JPanel{
 				String distance = JOptionPane.showInputDialog("Veuillez écrire la distance que vous souhaitez atteindre (en metre)");
 				distance = (distance == null) ? "" : distance;
 				if (distance.matches("[0-9]*") && !distance.equals(""))
+				{
+					panel.setVisible(false);
 					graph.plusGrandGain(graph.getListSommet().get(0), Integer.parseInt(distance));
+				}
 			}
 			
 		});

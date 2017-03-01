@@ -107,6 +107,11 @@ public class Sommet {
 		}
 	}
 	
+	public void activer()
+	{
+		distanceActif = 0;
+		active = true;
+	}
 	public String ToString()
 	{
 		String resultat = "("+id+", "+type+ ", "+gain+", (";

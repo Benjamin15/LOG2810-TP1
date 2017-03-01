@@ -1,54 +1,59 @@
 package GUI;
 
-import java.awt.Graphics;
-import java.util.ArrayList;
+
+import java.awt.FlowLayout;
 
 import javax.swing.JPanel;
-
-import GUI.Dessin.SommetGUI;
-import Graph.Arc;
-import Graph.Graph;
-import Graph.Sommet;
+import javax.swing.JTable;
 
 @SuppressWarnings("serial")
 public class DessinGraph extends JPanel{
 
-	private Graph graph;
-	private ArrayList<SommetGUI> listSommetGUI;
-	
-	
-	  public DessinGraph(Graph graph) {
+
+	private JTable tableau;
+	private Object[][] donnee;
+	private String[] entete;
+	 
+	public DessinGraph() {
 		super();
-		this.graph = graph;
-		listSommetGUI = new ArrayList<SommetGUI>();
+		tableau = null;
+		donnee = null;
+		entete = null;
+	}
+	
+	public DessinGraph(Object[][] donnee, String[] entete) {
+		super();
+		this.donnee = donnee;
+		this.entete = entete;
+		tableau = new JTable(donnee, entete);
+		tableau.setLocation(0, 300);
+		setLayout(new FlowLayout(FlowLayout.CENTER));
+		add(tableau);
+	}
+	public void afficherGraph()
+	{
+		tableau = new JTable(donnee, entete);
+		add(tableau);
+	}
+  
+	public JTable getTableau()
+	{
+		return tableau;
+	}
+	
+	public Object[][] getDonnee() {
+		return donnee;
 	}
 
+	public void setDonnee(Object[][] donnee) {
+		this.donnee = donnee;
+	}
 
+	public String[] getEntete() {
+		return entete;
+	}
 
-	public void paintComponent(Graphics g){
-		dessinSommet(g);
-	}   
-	private void dessinSommet(Graphics g)
-	{
-		calculerSommet();
-
-		for (SommetGUI sommet : listSommetGUI)
-		{
-			sommet.dessiner(g);
-		}
-	}	
-	
-	private void calculerSommet()
-	{		
-		int x1 = getHeight()/8;
-		int y1 = getWidth()/5*2;
-		int x2 = x1 + 100 + graph.getListSommet().get(0).getListArc().get(0).getDistance() * 5;
-		int y2 = y1;
-		listSommetGUI.add(new SommetGUI(x1, y1, graph.getListSommet().get(0)));
-		listSommetGUI.add(new SommetGUI(x2, y2, graph.getListSommet().get(3)));
-		/*for(Arc arc : graph.getListSommet().get(0).getListArc())
-		{
-			
-		}*/
+	public void setEntete(String[] entete) {
+		this.entete = entete;
 	}
 }
