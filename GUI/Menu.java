@@ -38,6 +38,7 @@ public class Menu extends JPanel{
 	    initBouton(graph, panel, trajet);
 	    add(description);
 	    add(resultat);
+	    
 	}
 	/**
 	 * Methode permettant d'initialiser les boutons
@@ -92,7 +93,6 @@ public class Menu extends JPanel{
 		cheminPlusCourt = new JButton("Trouver le chemin le plus court");
 		cheminPlusCourt.addActionListener(new ActionListener()
 		{
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String gain = JOptionPane.showInputDialog("Veuillez écrire le gain que vous souhaitez atteindre");
@@ -124,7 +124,6 @@ public class Menu extends JPanel{
 		cheminGrandGain = new JButton("Chemin ayant le plus grand gain");
 		cheminGrandGain.addActionListener(new ActionListener()
 		{
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String distance = JOptionPane.showInputDialog("Veuillez écrire la distance que vous souhaitez atteindre (en metre)");

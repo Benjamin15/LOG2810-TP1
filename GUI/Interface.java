@@ -23,6 +23,7 @@ public class Interface extends JFrame implements WindowListener {
 		setTitle("Pokemon GO");
 		setExtendedState(JFrame.MAXIMIZED_BOTH); 
 	}
+	
    /**
     * Methode permettant de démarer l'interface graphique
     * @throws IOException
@@ -35,10 +36,10 @@ public class Interface extends JFrame implements WindowListener {
 		tableau = new DessinGraph(graph.getDonnee(), graph.getIdSommet());
 		menu = new Menu(graph, tableau, trajet);
 		trajet.setVisible(false);
-		this.add(menu);
-		this.add(tableau,  BorderLayout.NORTH);
-		this.add(trajet);
-		this.setVisible(true);
+		add(menu);
+		add(tableau,  BorderLayout.NORTH);
+		add(trajet);
+		setVisible(true);
 	}
 
 	public void windowClosing(WindowEvent e) {

@@ -37,47 +37,80 @@ public class Graph {
 	 */
 	public void creerGraph() throws IOException
 	{
-		String path = "data_pokemon.txt";
-		ArrayList<Sommet> listSommet = new ArrayList<Sommet>();
+		final String path = "data_pokemon.txt";
 		List<String> lines = Files.readAllLines(Paths.get(path));
-        boolean fin= false;
-        for (String token : lines.get(0).split(";")) {
-        	String[] infos = token.split(",");
-        	Sommet sommet = new Sommet();
-        	sommet.setId(infos[0]);
-        	sommet.setType(infos[1]);
-        	sommet.setGain(Integer.parseInt(infos[2]));
-        	listSommet.add(sommet);
-        }
         ArrayList<Sommet> sommets = new ArrayList<Sommet>();
         ArrayList<Sommet> destinations = new ArrayList<Sommet>();
         ArrayList<Integer> distances = new ArrayList<Integer>();
-        for (String token : lines.get(1).split(";")) {
-        	String[] infos = token.split(",");
-        	for(Sommet sommet : listSommet){
-        		if (sommet.getId().equals(infos[0]))
-        			sommets.add(sommet);
-        	}
-        	for(Sommet sommet : listSommet){
-        		if (sommet.getId().equals(infos[1]))
-        			destinations.add(sommet);
-        	}
-        	distances.add(Integer.parseInt(infos[2]));
-        }
-        Integer index = 0; 
-        for (Sommet sommet : listSommet){
-	        	while (sommet.equals(sommets.get(index)) && !fin) {
-		        	sommet.getListArc().add(new Arc (distances.get(index), destinations.get(index)));
-		        	destinations.get(index).getListArc().add(new Arc(distances.get(index), sommet));
-		        	if (index + 1 < lines.get(1).split(";").length)
-		        		index++;
-		        	else 
-		        		fin = true;
-	        	}
-        } 
-        this.setListSommet(listSommet);
+        genererSommet(lines);
+        couperLigne(lines, sommets, destinations, distances);
+        genererArc(sommets, destinations, distances, lines);
 	}
-
+	
+	/**
+	 * Methode permettant de couper la deuxieme ligne du fichier, et de placer les valeurs dans les ArrayList
+	 * @param lines
+	 * @param sommets
+	 * @param destinations
+	 * @param distances
+	 */
+	private void couperLigne(List<String> lines, ArrayList<Sommet> sommets,  ArrayList<Sommet> destinations,  ArrayList<Integer> distances)
+	{
+		 for (String token : lines.get(1).split(";")) {
+	        	String[] infos = token.split(",");
+	        	for(Sommet sommet : listSommet){
+	        		if (sommet.getId().equals(infos[0]))
+	        			sommets.add(sommet);
+	        	}
+	        	for(Sommet sommet : listSommet){
+	        		if (sommet.getId().equals(infos[1]))
+	        			destinations.add(sommet);
+	        	}
+	        	distances.add(Integer.parseInt(infos[2]));
+	        }
+	}
+	
+	
+	/**
+	 * Methode permettant de gerer les sommets selon le fichier
+	 * @param lines
+	 */
+	private void genererSommet(List<String> lines)
+	{
+	    for (String token : lines.get(0).split(";")) {
+	    	String[] infos = token.split(",");
+	    	Sommet sommet = new Sommet();
+	    	sommet.setId(infos[0]);
+	    	sommet.setType(infos[1]);
+	    	sommet.setGain(Integer.parseInt(infos[2]));
+	    	listSommet.add(sommet);
+	    }
+	}
+	
+	/**
+	 * Methode permettant de generer les arcs selon le fichier.
+	 * @param sommets
+	 * @param destinations
+	 * @param distances
+	 * @param lines
+	 */
+	private void genererArc( ArrayList<Sommet> sommets, ArrayList<Sommet> destinations,  ArrayList<Integer> distances, List<String> lines)
+	{
+		Integer index = 0;
+        boolean fin= false;
+		for (Sommet sommet : listSommet)
+		{
+        	while (sommet.equals(sommets.get(index)) && !fin) 
+        	{
+	        	sommet.getListArc().add(new Arc (distances.get(index), destinations.get(index)));
+	        	destinations.get(index).getListArc().add(new Arc(distances.get(index), sommet));
+	        	if (index + 1 < lines.get(1).split(";").length)
+	        		index++;
+	        	else 
+	        		fin = true;
+        	}
+		}
+	}
 	/**
 	 * permet de lire les graph a l'ï¿½cran
 	 */
@@ -98,7 +131,6 @@ public class Graph {
 	 */
 	public Pair<ArrayList<Sommet>, Integer> plusCourtChemin(Sommet debut, int gainVoulu)
 	{
-		Pair<ArrayList<Sommet>, Integer> pair = new Pair<ArrayList<Sommet>, Integer>();
 		double taux = 0;
 		int gainObtenu = 0;
 		Sommet temp = null;
@@ -127,17 +159,30 @@ public class Graph {
 			majDistance(cheminChoisi, tempArc.getDistance());
 			cheminChoisi.add(sommetCourant);
 			sommetCourant.desactiver();
-			System.out.println("gainActuel :"+ gainObtenu);
-			System.out.println("distance Parcouru :"+ distanceParcouru);
 		}
 		reactiver();
-		pair.first = cheminChoisi;
-		pair.second = distanceParcouru;
-		return pair;
+		afficherPlusCourtChemin(cheminChoisi, distanceParcouru);
+		return new Pair<ArrayList<Sommet>, Integer>(cheminChoisi, distanceParcouru);
 	}
 
 	/**
-	 * Permet de mettre ï¿½ jour la distance avant de rï¿½active les sommets que nous avons dï¿½jï¿½ traversï¿½.
+	 * Methode permettant de gérer l'affichage du plus court chemin
+	 * @param cheminChoisi
+	 * @param distanceParcouru
+	 */
+	private void afficherPlusCourtChemin(ArrayList<Sommet> cheminChoisi, int distanceParcouru)
+	{
+		int i = 0;
+		for (Sommet sommet : cheminChoisi)
+		{
+			if (i++ < cheminChoisi.size() - 1)
+				System.out.print(sommet.getId() + " -> ");
+			else 
+				System.out.println(sommet.getId());
+		}
+	}
+	/**
+	 * Permet de mettre à jour la distance avant de reactive les sommets que nous avons deja traverse.
 	 * @param cheminChoisi
 	 * @param distance
 	 */
@@ -149,14 +194,15 @@ public class Graph {
 		}
 	}
 	/**
-	 * Permet de voir le plus grand gain ï¿½ une distance max en partant d'un arc. Doit afficher les valeurs en sorties.
+	 * Permet de voir le plus grand gain sur une distance max en partant d'un arc. Doit afficher les valeurs en sorties.
+	 *On utilise une version mis à jour de l'algorithme A*.
+	 *On considere que les collisions sont représentées par les distances max.
 	 *
 	 * @param debut
 	 * @param distanceMax
 	 */
 	public Pair<ArrayList<Sommet>, Integer> plusGrandGain(Sommet debut, int distanceMax)
 	{
-		Pair<ArrayList<Sommet>, Integer> pair = new Pair<ArrayList<Sommet>, Integer>();
 		int distanceParcouru = 0;			
 		Sommet sommetCourant = debut;
 		ArrayList<Pair<Sommet, Arc>> cheminOuvert = new ArrayList<Pair<Sommet,Arc>>();
@@ -210,9 +256,7 @@ public class Graph {
 		System.out.println("distance parcouru : " + distanceParcouru);
 		affichageConsoleGrandGain(cheminChoisi, distanceMax, gainObtenu);
 		reactiver();
-		pair.first = cheminChoisi;
-		pair.second = gainObtenu;
-		return pair;
+		return new Pair<ArrayList<Sommet>, Integer>(cheminChoisi, gainObtenu);
 	}
 	
 	/**

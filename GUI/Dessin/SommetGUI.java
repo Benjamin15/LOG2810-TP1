@@ -65,7 +65,7 @@ public class SommetGUI extends JPanel {
 		else if (sommet.getType().equals("pokestop"))
 			g.setColor(Color.blue);
 		else
-			g.setColor(Color.yellow);
+			g.setColor(Color.darkGray);
 	    g.drawOval(x, y, this.getWidth(), this.getHeight());
 	    g.setColor(Color.BLACK);
 	    g.drawString(sommet.getId(), x + getHeight()/2, y + getWidth()/2);
